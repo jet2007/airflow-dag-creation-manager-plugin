@@ -81,3 +81,16 @@ Once you deploy the plugin and restart the web server, you can start to use the 
 http://{AIRFLOW_HOST}:{AIRFLOW_PORT}/admin/dagcreationmanager/list
 
 Now, you can create and manage your DAG in this web page. Enjoy!
+
+
+### 修改以下内容
+#### 增加一个自定义的可执行的HIVEQL
+- 可执行的HIVEQL:  sh /home/airflow/AIRFLOWAPP/a.sh 文本框的SQL内容
+- plugins\dcmp\dag_converter.py
+    - 主要[HIVEQL_TASK_CODE_TEMPLATE]处
+- plugins\dcmp\dag_creation_manager_plugin.py
+- plugins\dcmp\settings.py
+- plugins\dcmp\static\dcmp\js\edit.js
+
+#### 参数: exection_date，推荐使用
+- plugins\dcmp\templates\dcmp\params.html
