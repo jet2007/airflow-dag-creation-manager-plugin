@@ -82,6 +82,14 @@ _["%%(task_name)s"].category = {
     bash_command=r'''%(processed_command)s '''.decode("utf-8"),
 """, }
 
+
+    HIVEQL_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
+        "before_code": "",
+        "operator_name": "BashOperator",
+        "operator_code": r"""
+    bash_command= 'sh /home/airflow/AIRFLOWAPP/a.sh \'\'\'' + r'''%(processed_command)s '''.decode("utf-8") +'\'\'\'',
+""", }
+
     HQL_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
         "before_code": "",
         "operator_name": "HiveOperator",
@@ -143,6 +151,7 @@ _["%(task_name)s"] << _["%(upstream_name)s"]
         "short_circuit": SHORT_CIRCUIT_TASK_CODE_TEMPLATE,
         "time_sensor": TIME_SENSOR_TASK_CODE_TEMPLATE,
         "timedelta_sensor": TIMEDELTA_SENSOR_TASK_CODE_TEMPLATE,
+        "hiveql": HIVEQL_TASK_CODE_TEMPLATE,
     }
     
     JOB_NAME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9_]+$")

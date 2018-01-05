@@ -93,6 +93,7 @@ def command_render(task_type, command):
     attr_renderer = {
         'bash': lambda x: render(x, lexers.BashLexer),
         'hql': lambda x: render(x, lexers.SqlLexer),
+        'hiveql': lambda x: render(x, lexers.SqlLexer),
         'sql': lambda x: render(x, lexers.SqlLexer),
         'python': lambda x: render(x, lexers.PythonLexer),
         'short_circuit': lambda x: render(x, lexers.PythonLexer),

@@ -95,6 +95,57 @@
             </tr>
             </thead>
             <tbody valign="top">
+
+
+                <tr class="row-even">
+                    <td>
+                        <code class="docutils literal">
+                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(days=0)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
+                        </code>
+                    </td>
+                    <td>推荐:date格式,TODAY as
+                        <code class="docutils literal">
+                            <span class="pre">YYYY-MM-DD</span></code>
+                    </td>
+                </tr>
+
+                <tr class="row-odd">
+                    <td>
+                        <code class="docutils literal">
+                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(day=-1)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
+                        </code>
+                    </td>
+                    <td>推荐:date格式,lastday as
+                        <code class="docutils literal">
+                            <span class="pre">YYYY-MM-DD</span></code>
+                    </td>
+                </tr>
+
+                <tr class="row-even">
+                    <td>
+                        <code class="docutils literal">
+                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(day=1,months=+1,days=-1)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
+                        </code>
+                    </td>
+                    <td>推荐:date格式,dt_execution_date_next_month_lastday as
+                        <code class="docutils literal">
+                            <span class="pre">YYYY-MM-DD</span></code>
+                    </td>
+                </tr>
+
+                <tr class="row-odd">
+                    <td>
+                        <code class="docutils literal">
+                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(day=1,months=+1,days=-1)).strftime("%Y-%m-%d %H:%M:%S") </span><span class="pre">}}</span>
+                        </code>
+                    </td>
+                    <td>推荐:datetime格式,dt_execution_date_next_month_lastday as
+                        <code class="docutils literal">
+                            <span class="pre">YYYY-MM-DD HH:MM:DD</span></code>
+                    </td>
+                </tr>
+
+
                 <tr class="row-even">
                     <td>
                         <code class="docutils literal">
