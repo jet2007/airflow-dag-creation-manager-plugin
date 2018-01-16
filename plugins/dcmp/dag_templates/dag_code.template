@@ -64,6 +64,7 @@ default_args = {
     'retries': %(retries)s,
     'retry_delay': timedelta(minutes=%(retry_delay_minutes)s),
     'depends_on_past': %(depends_on_past)s,
+    'dag_doc_md': '''%(dag_doc_md)s''',
 }
 
 

@@ -44,7 +44,7 @@ class DAGConverter(object):
         ("concurrency", lambda x: int(x) if x else 16, False), ("max_active_runs", lambda x: int(x) if x else 16, False),
         ("add_start_task", get_bool_code_false, False), ("add_end_task", get_bool_code_false, False),
         ("skip_dag_not_latest", get_bool_code_false, False), ("skip_dag_on_prev_running", get_bool_code_false, False),
-        ("email_on_skip_dag", get_bool_code_false, False), ("emails", get_string, False), ("start_date", get_string, False),
+        ("email_on_skip_dag", get_bool_code_false, False), ("emails", get_string, False), ("dag_doc_md", get_string, False), ("start_date", get_string, False),
         ("end_date", get_string, False))
     TASK_ITEMS = (("task_name", get_string, True), ("task_type", get_string, True), ("command", get_string, False),
         ("priority_weight", get_int, False), ("upstreams", get_list, False), ("queue_pool", get_string, False),
