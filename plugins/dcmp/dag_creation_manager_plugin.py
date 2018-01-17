@@ -193,7 +193,7 @@ class DagCreationManager(BaseView):
         "skip_dag_on_prev_running": False,
         "email_on_skip_dag": False,
         "emails": "",
-        "dag_doc_md": "dag 文档描述(Markdown)",
+        "dag_doc_md": "#### dag 文档描述(Markdown)",
         "tasks": [],
     }
 
