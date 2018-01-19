@@ -49,25 +49,25 @@ def get_default_params():
         # 'last_month_first_day': (last_month + relativedelta(day=1)).strftime("%%Y-%%m-%%d"),
         # 'last_month_last_day': (last_month + relativedelta(day=31)).strftime("%%Y-%%m-%%d"),
         # fix by jet 2018-01-19
-        'now': now.strftime("%Y-%m-%d %H:%M:%S"),
-        'yesterday': (now + relativedelta(days=-1) ).strftime("%Y-%m-%d"),
-        'today': (now + relativedelta(days=-0) ).strftime("%Y-%m-%d"),
-        'tomorrow': (now + relativedelta(days=+1) ).strftime("%Y-%m-%d"),
-        'this_month': (now + relativedelta(days=-0) ).strftime("%Y-%m"),
-        'this_month_first_day': (now + relativedelta(day=1) ).strftime("%Y-%m-%d"),
-        'this_month_last_day': (now + relativedelta(months=+1,day=1,days=-1) ).strftime("%Y-%m-%d"),
+        'now': now.strftime("%%Y-%%m-%%d %%H:%%M:%%S"),
+        'yesterday': (now + relativedelta(days=-1) ).strftime("%%Y-%%m-%%d"),
+        'today': (now + relativedelta(days=-0) ).strftime("%%Y-%%m-%%d"),
+        'tomorrow': (now + relativedelta(days=+1) ).strftime("%%Y-%%m-%%d"),
+        'this_month': (now + relativedelta(days=-0) ).strftime("%%Y-%%m"),
+        'this_month_first_day': (now + relativedelta(day=1) ).strftime("%%Y-%%m-%%d"),
+        'this_month_last_day': (now + relativedelta(months=+1,day=1,days=-1) ).strftime("%%Y-%%m-%%d"),
 
-        'last_month': (now + relativedelta(months=-1) ).strftime("%Y-%m"),
-        'last_month_first_day': (now + relativedelta(months=-1,day=1) ).strftime("%Y-%m-%d"),
-        'last_month_last_day': (now + relativedelta(day=1,days=-1) ).strftime("%Y-%m-%d"),
+        'last_month': (now + relativedelta(months=-1) ).strftime("%%Y-%%m"),
+        'last_month_first_day': (now + relativedelta(months=-1,day=1) ).strftime("%%Y-%%m-%%d"),
+        'last_month_last_day': (now + relativedelta(day=1,days=-1) ).strftime("%%Y-%%m-%%d"),
 
-        'next_month': (now + relativedelta(months=+1) ).strftime("%Y-%m"),
-        'next_month_first_day': (now + relativedelta(months=+1,day=1) ).strftime("%Y-%m-%d"),
-        'next_month_last_day': (now + relativedelta(months=+2,day=1,days=-1) ).strftime("%Y-%m-%d"),
+        'next_month': (now + relativedelta(months=+1) ).strftime("%%Y-%%m"),
+        'next_month_first_day': (now + relativedelta(months=+1,day=1) ).strftime("%%Y-%%m-%%d"),
+        'next_month_last_day': (now + relativedelta(months=+2,day=1,days=-1) ).strftime("%%Y-%%m-%%d"),
 
-        'this_year': (now + relativedelta(years=-0) ).strftime("%Y"),
-        'last_year': (now + relativedelta(years=-1) ).strftime("%Y"),
-        'next_year': (now + relativedelta(years=+1) ).strftime("%Y"),
+        'this_year': (now + relativedelta(years=-0) ).strftime("%%Y"),
+        'last_year': (now + relativedelta(years=-1) ).strftime("%%Y"),
+        'next_year': (now + relativedelta(years=+1) ).strftime("%%Y"),
     }
 
 
