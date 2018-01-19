@@ -16,42 +16,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 
 (function($) {
     var render_help = '<p class="help-block">Can include <a target="_blank" href="params">{{ params }}</a>, <a target="_blank" href="http://pythonhosted.org/airflow/code.html#id2">{{ macros }}</a> and <a target="_blank" href="http://pythonhosted.org/airflow/code.html#default-variables">default variables</a>.</p>';
-    var wait_task_instance_context_help=""""
-#依赖条件:dag_id.task_id在时间范围内[execution_date_begin,execution_date_end){左开右闭}是否有运行成功过
-#循环等待的overtime_num次数,超时后则失败
-#frequency:为预定义的类型,当此值不为custom,则可决定execution_date_begin,execution_date_end对应的值;示例当frequency=hourly,execution_date='2017-02-04 05:06:07',则可决定execution_date_begin='2017-02-04 05:00:00',execution_date_end='2017-02-04 06:00:00'
-
-#设置字典类型的变量waits\n
-waits['dag_id'],必填,依赖的dag_id
-waits['task_id'],必填,依赖的task_id
-waits['frequency'],可选,取值=(daily,monthly,yearly,hourly,custom;缺省为daily)
-waits['execution_date'],可选,缺省值为本dag_id的运行动态execution_date,建议不填写
-waits['overtime_num'],可选,循环等待的次数(每次1分钟)，缺省为1440，即1天
-waits['execution_date_begin'],可选,当frequency=custom时,建议使用dag_id的运行动态execution_date相关
-waits['execution_date_end'],可选,建议使用dag_id的运行动态execution_date相关
-
-#当前wait作业所在dag_id=dag_wait,若execution_date='2017-02-04 05:06:07'
-
-#示例1:依赖作业[dag_id.task_id]在同一天内,已执行成功过;
-#依赖作业[dag_id.task_id]的execution_date[2017-02-04,2017-02-05)范围内，有成功执行
-#waits['dag_id']='dag_biz_load_data'
-#waits['task_id']='task_prd_fact_orders'
-
-#示例2:依赖作业[dag_id.task_id]在同一个月内,已执行成功过;
-#依赖作业[dag_id.task_id]的execution_date[2017-02-01,2017-03-01)范围内，有成功执行
-#waits['frequency']='monthly'
-#waits['dag_id']='dag_biz_load_data'
-#waits['task_id']='task_prd_fact_orders'
-
-#示例3:依赖作业[dag_id.task_id]的自定义时间范围内，有成功执行
-#from dateutil.relativedelta import relativedelta   已import
-#waits['frequency']='custom'
-#waits['dag_id']='dag_biz_load_data'
-#waits['task_id']='task_prd_fact_orders'
-#waits['execution_date_begin']= (context['execution_date'] + relativedelta(months=-1,day=1)).strftime("%Y-%m-%d %H:%M:%S") 
-#waits['execution_date_end']= (context['execution_date'] + relativedelta(months=+1,day=10)).strftime("%Y-%m-%d %H:%M:%S") 
-
-    """"
+    var wait_task_instance_context_help="#依赖条件:dag_id.task_id在时间范围内[execution_date_begin,execution_date_end){左开右闭}是否有运行成功过\n#循环等待的overtime_num次数,超时后则失败\n#frequency:为预定义的类型,当此值不为custom,则可决定execution_date_begin,execution_date_end对应的值;示例当frequency=hourly,execution_date='2017-02-04 05:06:07',则可决定execution_date_begin='2017-02-04 05:00:00',execution_date_end='2017-02-04 06:00:00'\n\n#设置字典类型的变量waits\n#waits['dag_id'],必填,依赖的dag_id\n#waits['task_id'],必填,依赖的task_id\n#waits['frequency'],可选,取值=(daily,monthly,yearly,hourly,custom;缺省为daily)\n#waits['execution_date'],可选,缺省值为本dag_id的运行动态execution_date,建议不填写\n#waits['overtime_num'],可选,循环等待的次数(每次1分钟)，缺省为1440，即1天\n#waits['execution_date_begin'],可选,当frequency=custom时,建议使用dag_id的运行动态execution_date相关\n#waits['execution_date_end'],可选,建议使用dag_id的运行动态execution_date相关\n\n#当前wait作业所在dag_id=dag_wait,若execution_date='2017-02-04 05:06:07'\n\n#示例1:依赖作业[dag_id.task_id]在同一天内,已执行成功过;\n#依赖作业[dag_id.task_id]的execution_date[2017-02-04,2017-02-05)范围内，有成功执行\n#waits['dag_id']='dag_biz_load_data'\n#waits['task_id']='task_prd_fact_orders'\n#示例2:依赖作业[dag_id.task_id]在同一个月内,已执行成功过;\n#依赖作业[dag_id.task_id]的execution_date[2017-02-01,2017-03-01)范围内，有成功执行\n#waits['frequency']='monthly'\n#waits['dag_id']='dag_biz_load_data'\n#waits['task_id']='task_prd_fact_orders'\n\n#示例3:依赖作业[dag_id.task_id]的自定义时间范围内，有成功执行\n#from dateutil.relativedelta import relativedelta   已import\n#waits['frequency']='custom'\n#waits['dag_id']='dag_biz_load_data'\n#waits['task_id']='task_prd_fact_orders'\n#waits['execution_date_begin']= (context['execution_date'] + relativedelta(months=-1,day=1)).strftime("%Y-%m-%d %H:%M:%S")\n#waits['execution_date_end']= (context['execution_date'] + relativedelta(months=+1,day=10)).strftime("%Y-%m-%d %H:%M:%S")\n"
     window.default_task = {
         task_name: "",
         task_type: "bash",
