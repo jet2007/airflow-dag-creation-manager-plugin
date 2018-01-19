@@ -152,12 +152,12 @@ def main(*params):
     parser = getOptionParser()
     #sys.argv[1:]
     options, args = parser.parse_args(params)
-    #print '#######11111'
-    #print options
-    #print '#######22222'
+    print '#######11111'
+    print options
+    print '#######22222'
     op=param_parser(options)
-    #print op
-    #print '#######33333'
+    print op
+    print '#######33333'
     waiting_task_inst(op)
 
 if __name__ == "__main__":
