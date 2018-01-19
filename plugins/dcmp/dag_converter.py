@@ -117,22 +117,26 @@ def %(task_name)s_worker(ds, **context):
     WAIT_TASK_INSTANCE_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
         "before_code": """
 def %(task_name)s_worker(ds, **context):
+
+    print '#####context'
+    print context
+    print '#####context'
+
     import sys
     import os
     reload(sys)  
     sys.setdefaultencoding('utf8') 
     from airflow import settings
-    script_folder=settings.DAGS_FOLDER+"/plugins/dcmp/tools"
-    print script_folder
+    script_folder=settings.AIRFLOW_HOME + "/plugins/dcmp/tools"
+
+    print "######script_folder" + script_folder
     sys.path.append(script_folder)
     import waiting_task_inst_state
     params = {}
     params['execution_date'] = context['execution_date'] # {{ execution_date }}
     %(processed_command)s
 
-    print '#####context'
-    print context
-    print '#####context'
+
     waiting_task_inst_state.main(params)
     return None
 """,
