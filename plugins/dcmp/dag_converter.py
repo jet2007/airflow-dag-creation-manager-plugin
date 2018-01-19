@@ -113,6 +113,36 @@ def %(task_name)s_worker(ds, **context):
     python_callable=%(task_name)s_worker,
 """, }
 
+
+    WAIT_TASK_INSTANCE_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
+        "before_code": """
+def %(task_name)s_worker(ds, **context):
+    import sys
+    import os
+    reload(sys)  
+    sys.setdefaultencoding('utf8') 
+    from airflow import settings
+    script_folder=settings.DAGS_FOLDER+"/plugins/dcmp/tools"
+    print script_folder
+    sys.path.append(script_folder)
+    import waiting_task_inst_state
+    params = {}
+    params['execution_date'] = context['execution_date'] # {{ execution_date }}
+    %(processed_command)s
+
+    print '#####context'
+    print context
+    print '#####context'
+    waiting_task_inst_state.main(params)
+    return None
+""",
+        "operator_name": "PythonOperator",
+        "operator_code": r"""
+    provide_context=True,
+    python_callable=%(task_name)s_worker,
+""", }
+
+
     SHORT_CIRCUIT_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
         "before_code": """
 def %(task_name)s_worker(ds, **context):
@@ -152,6 +182,7 @@ _["%(task_name)s"] << _["%(upstream_name)s"]
         "time_sensor": TIME_SENSOR_TASK_CODE_TEMPLATE,
         "timedelta_sensor": TIMEDELTA_SENSOR_TASK_CODE_TEMPLATE,
         "hiveql": HIVEQL_TASK_CODE_TEMPLATE,
+        "wait_task_instance": WAIT_TASK_INSTANCE_TASK_CODE_TEMPLATE,
     }
     
     JOB_NAME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9_]+$")
@@ -394,7 +425,7 @@ return not skip
                 task["task_category_fgcolor"] = task_category["fgcolor"]
                 task["task_category_order"] = task_category["order"]
 
-                if task["task_type"] in ["python", "short_circuit"]:
+                if task["task_type"] in ["python", "short_circuit", "wait_task_instance"]:
                     task["processed_command"] = "\n".join(map(lambda x: "    " + x, task["command"].split("\n")))
                 else:
                     task["processed_command"] = task["command"]

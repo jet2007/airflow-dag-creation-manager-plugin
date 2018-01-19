@@ -90,6 +90,7 @@
             </colgroup>
             <thead valign="bottom">
                 <tr class="row-odd">
+                <th class="head">分类</th>
                 <th class="head">Variable</th>
                 <th class="head">Description</th>
             </tr>
@@ -98,141 +99,119 @@
 
 
                 <tr class="row-even">
+                    <td>动态execution_date</td>
                     <td>
                         <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(days=0)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
+                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(days=+0)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
                         </code>
                     </td>
-                    <td>推荐:date格式,TODAY as
+                    <td>操作日execution_date
                         <code class="docutils literal">
                             <span class="pre">YYYY-MM-DD</span></code>
                     </td>
                 </tr>
 
                 <tr class="row-odd">
+                    <td>动态execution_date</td>
                     <td>
                         <code class="docutils literal">
                             <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(day=-1)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
                         </code>
                     </td>
-                    <td>推荐:date格式,lastday as
+                    <td>操作日的前1天
                         <code class="docutils literal">
                             <span class="pre">YYYY-MM-DD</span></code>
                     </td>
                 </tr>
 
                 <tr class="row-even">
+                    <td>动态execution_date</td>
                     <td>
                         <code class="docutils literal">
                             <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(day=1,months=+1,days=-1)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
                         </code>
                     </td>
-                    <td>推荐:date格式,dt_execution_date_next_month_lastday as
+                    <td>操作日的当月最后1天
                         <code class="docutils literal">
                             <span class="pre">YYYY-MM-DD</span></code>
                     </td>
                 </tr>
 
                 <tr class="row-odd">
+                    <td>动态execution_date</td>
                     <td>
                         <code class="docutils literal">
                             <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(day=1,months=+1,days=-1)).strftime("%Y-%m-%d %H:%M:%S") </span><span class="pre">}}</span>
                         </code>
                     </td>
-                    <td>推荐:datetime格式,dt_execution_date_next_month_lastday as
+                    <td>操作日的当月最后1天
                         <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD HH:MM:DD</span></code>
+                            <span class="pre">YYYY-MM-DD HH:MI:DD</span></code>
                     </td>
                 </tr>
 
 
                 <tr class="row-even">
+                    <td>动态当前日期+时间</td>
                     <td>
                         <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre">params.today</span><span class="pre">}}</span>
+                            <span class="pre">{{</span><span class="pre">params.now</span><span class="pre">}}</span>
                         </code>
                     </td>
-                    <td>today's date as
+                    <td>今天+时间
                         <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD</span></code>
+                            <span class="pre">YYYY-MM-DD HH:MI:SS</span></code>
                     </td>
                 </tr>
                 <tr class="row-odd">
+                    <td>动态当前日期+时间</td>
                     <td>
                         <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre">params.yesterday</span><span class="pre">}}</span>
+                            <span class="pre">{{ params.today }},{{ params.yesterday }},{{ params.tomorrow }}</span>
                         </code>
                     </td>
-                    <td>yesterday's date as
+                    <td>今天,昨天,明天
                         <code class="docutils literal">
                             <span class="pre">YYYY-MM-DD</span></code>
                     </td>
                 </tr>
                 <tr class="row-even">
+                    <td>动态当前日期+时间</td>
                     <td>
                         <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre">params.this_month</span><span class="pre">}}</span>
+                            <span class="pre">{{ params.this_month }},{{ params.last_month }},{{ params.next_month }}</span>
                         </code>
                     </td>
-                    <td>this month as
+                    <td>当月,上一月,下一月
                         <code class="docutils literal">
                             <span class="pre">YYYY-MM</span></code>
                     </td>
                 </tr>
                 <tr class="row-odd">
+                    <td>动态当前日期+时间</td>
                     <td>
                         <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre">params.this_month_first_day</span><span class="pre">}}</span>
+                            <span class="pre">{{ params.this_month_first_day }},{{ params.last_month_first_day }},{{ params.next_month_last_day }}</span>
                         </code>
                     </td>
-                    <td>the first day of this month's date as
+                    <td>当月第1天,上一月第1天,下一月第1天
                         <code class="docutils literal">
                             <span class="pre">YYYY-MM-DD</span></code>
                     </td>
                 </tr>
                 <tr class="row-even">
+                    <td>动态当前日期+时间</td>
                     <td>
                         <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre">params.this_month_last_day</span><span class="pre">}}</span>
+                            <span class="pre">{{ params.this_year }},{{ params.last_year }},{{ params.next_year }}</span>
                         </code>
                     </td>
-                    <td>the last day of this month's as
+                    <td>今年,去年,明年
                         <code class="docutils literal">
                             <span class="pre">YYYY-MM-DD</span></code>
                     </td>
                 </tr>
-                <tr class="row-odd">
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre">params.last_month</span><span class="pre">}}</span>
-                        </code>
-                    </td>
-                    <td>last month as
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM</span></code>
-                    </td>
-                </tr>
-                <tr class="row-even">
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre">params.last_month_first_day</span><span class="pre">}}</span>
-                        </code>
-                    </td>
-                    <td>the first day of last month's date as
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD</span></code>
-                    </td>
-                </tr>
-                <tr class="row-odd">
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre">params.last_month_last_day</span><span class="pre">}}</span>
-                        </code>
-                    </td>
-                    <td>the last day of last month's as
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD</span></code>
-                    </td>
+             
                 </tr>
             </tbody>
         </table>

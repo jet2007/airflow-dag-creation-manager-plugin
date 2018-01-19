@@ -6,7 +6,9 @@ import socket
 from airflow import configuration
 
 
-TASK_TYPES = ["bash", "hql", "python", "short_circuit", "time_sensor", "timedelta_sensor","hiveql"]
+#TASK_TYPES = ["bash", "hql", "python", "short_circuit", "time_sensor", "timedelta_sensor","hiveql"]
+TASK_TYPES = ["hiveql","bash",  "python","wait_task_instance", "time_sensor", "timedelta_sensor","hql", "short_circuit"]
+
 
 AUTHENTICATE = configuration.getboolean('webserver', 'AUTHENTICATE')
 BASE_URL = configuration.get('webserver', 'BASE_URL')

@@ -96,6 +96,7 @@ def command_render(task_type, command):
         'hiveql': lambda x: render(x, lexers.SqlLexer),
         'sql': lambda x: render(x, lexers.SqlLexer),
         'python': lambda x: render(x, lexers.PythonLexer),
+        'wait_task_instance': lambda x: render(x, lexers.PythonLexer),
         'short_circuit': lambda x: render(x, lexers.PythonLexer),
         'time_sensor': lambda x: render(x, lexers.PythonLexer),
         'timedelta_sensor': lambda x: render(x, lexers.PythonLexer),
