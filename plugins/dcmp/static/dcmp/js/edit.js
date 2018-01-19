@@ -16,7 +16,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 
 (function($) {
     var render_help = '<p class="help-block">Can include <a target="_blank" href="params">{{ params }}</a>, <a target="_blank" href="http://pythonhosted.org/airflow/code.html#id2">{{ macros }}</a> and <a target="_blank" href="http://pythonhosted.org/airflow/code.html#default-variables">default variables</a>.</p>';
-   
+
     window.default_task = {
         task_name: "",
         task_type: "bash",
@@ -135,7 +135,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
                     field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: '') + '</textarea>');
                     field_html.push(get_ace_script(task_type, "python"));
                 }else if(task_type == "wait_task_instance"){
-                    field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: '') + '</textarea>');
+                    field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: "#示例:依赖在同一天内,已执行成功过;\n#waits['dag_id']='dag_biz_load_data'\n#waits['task_id']='task_prd_fact_orders'") + '</textarea>');
                     field_html.push(render_help);
                     field_html.push(get_ace_script(task_type, "python"));
                 }else if(task_type == "timedelta_sensor"){
