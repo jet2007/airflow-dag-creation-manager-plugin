@@ -47,7 +47,7 @@ class DAGConverter(object):
         ("email_on_skip_dag", get_bool_code_false, False), ("emails", get_string, False), ("dag_doc_md", get_string, False), ("start_date", get_string, False),
         ("end_date", get_string, False))
     TASK_ITEMS = (("task_name", get_string, True), ("task_type", get_string, True), ("command", get_string, False) ,
-        ("priority_weight", get_int, False), ("upstreams", get_list, False), ("queue_pool", get_string, False),
+        ("priority_weight", get_int, False),("task_command_para", get_int, False), ("upstreams", get_list, False), ("queue_pool", get_string, False),
         ("task_category", get_string, False), )
     TASK_EXTRA_ITEMS = (("retries", get_int, "retries=%s,"), ("retry_delay_minutes", get_int, "retry_delay=timedelta(minutes=%s),"), )
     
@@ -58,6 +58,7 @@ _["%%(task_name)s"] = %(operator_name)s(
     task_id='%%(task_name)s',
 %(operator_code)s
     priority_weight=%%(priority_weight)s,
+    task_command_para='%%(task_command_para)s',
     queue=%%(queue_code)s,
     pool=%%(pool_code)s,
     dag=dag,
@@ -87,8 +88,10 @@ _["%%(task_name)s"].category = {
         "before_code": "",
         "operator_name": "BashOperator",
         "operator_code": r"""
-    bash_command= 'sh /home/airflow/AIRFLOWAPP/a.sh \'\'\'' + r'''%(processed_command)s '''.decode("utf-8") +'\'\'\'',
-""", }
+    # bash_command= 'sh /home/airflow/AIRFLOWAPP/a.sh \'\'\'' + r'''%(processed_command)s '''.decode("utf-8") +'\'\'\'',""", 
+
+    bash_command= 'echo "task_command_para=" \'\'\''+r'''%(task_command_para)s '''.decode("utf-8") + '\'\'\'' '+'echo hiveql=' + r'''%(processed_command)s '''.decode("utf-8") +'\'\'\'',""", 
+     }
 
     HQL_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
         "before_code": "",
