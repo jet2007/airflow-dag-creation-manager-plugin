@@ -129,7 +129,6 @@ Date.prototype.Format = function (fmt) { //author: meizz
                     field_html.push(render_help);
                     field_html.push(get_ace_script(task_type, "sql"));
                 }else if(task_type == "hiveql_parallel"){
-                    field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="para_ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command_para">' + (task_type == task[field_name]? task["command_para"]: '') + '</textarea>');
                     field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: '') + '</textarea>');
                     field_html.push(render_help);
                     field_html.push(get_ace_script(task_type, "sql"));
@@ -229,6 +228,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
                 task_to_element_by_field(lastest_task_id, task, "priority_weight", "number", null, null, "Priority weight of this task against other task. This allows the executor to trigger higher priority tasks before others when things get backed up."),
                 task_to_element_by_field(lastest_task_id, task, "retries", "number", null, null, "The number of retries that should be performed before failing the task."),
                 task_to_element_by_field(lastest_task_id, task, "retry_delay_minutes", "number", null, null, "Delay minutes between retries."),
+                task_to_element_by_field(lastest_task_id, task, "command_para", "text", null, null, "预留的参数，当前服务于hiveql_parallel."),
                 '        </div>',
                 '    </div>',
                 '</div>',
