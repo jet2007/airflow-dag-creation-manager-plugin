@@ -22,7 +22,6 @@ Date.prototype.Format = function (fmt) { //author: meizz
         task_type: "bash",
         command: "",
         priority_weight: 0,
-        task_command_para: "",
         upstreams: []
     };
     
@@ -224,7 +223,6 @@ Date.prototype.Format = function (fmt) { //author: meizz
                 task_to_element_by_field(lastest_task_id, task, "priority_weight", "number", null, null, "Priority weight of this task against other task. This allows the executor to trigger higher priority tasks before others when things get backed up."),
                 task_to_element_by_field(lastest_task_id, task, "retries", "number", null, null, "The number of retries that should be performed before failing the task."),
                 task_to_element_by_field(lastest_task_id, task, "retry_delay_minutes", "number", null, null, "Delay minutes between retries."),
-                task_to_element_by_field(lastest_task_id, task, "task_command_para", "text", true, null, "预留的参数,task_command_para,供自定义的sensor使用"),
                 '        </div>',
                 '    </div>',
                 '</div>',
