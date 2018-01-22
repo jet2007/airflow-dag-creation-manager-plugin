@@ -59,6 +59,7 @@ _["%%(task_name)s"] = %(operator_name)s(
 %(operator_code)s
     priority_weight=%%(priority_weight)s,
     queue=%%(queue_code)s,
+    command_para='%%(command_para)s',
     pool=%%(pool_code)s,
     dag=dag,
     %%(extra_params)s)
