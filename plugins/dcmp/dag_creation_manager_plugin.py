@@ -94,7 +94,6 @@ def command_render(task_type, command):
         'bash': lambda x: render(x, lexers.BashLexer),
         'hql': lambda x: render(x, lexers.SqlLexer),
         'hiveql': lambda x: render(x, lexers.SqlLexer),
-        'hiveql_parallel': lambda x: render(x, lexers.SqlLexer),
         'sql': lambda x: render(x, lexers.SqlLexer),
         'python': lambda x: render(x, lexers.PythonLexer),
         'wait_task_instance': lambda x: render(x, lexers.PythonLexer),

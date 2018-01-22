@@ -46,7 +46,7 @@ class DAGConverter(object):
         ("skip_dag_not_latest", get_bool_code_false, False), ("skip_dag_on_prev_running", get_bool_code_false, False),
         ("email_on_skip_dag", get_bool_code_false, False), ("emails", get_string, False), ("dag_doc_md", get_string, False), ("start_date", get_string, False),
         ("end_date", get_string, False))
-    TASK_ITEMS = (("task_name", get_string, True), ("task_type", get_string, True), ("command", get_string, False),("command_para", get_string, False),
+    TASK_ITEMS = (("task_name", get_string, True), ("task_type", get_string, True), ("command", get_string, False) ,
         ("priority_weight", get_int, False), ("upstreams", get_list, False), ("queue_pool", get_string, False),
         ("task_category", get_string, False), )
     TASK_EXTRA_ITEMS = (("retries", get_int, "retries=%s,"), ("retry_delay_minutes", get_int, "retry_delay=timedelta(minutes=%s),"), )
@@ -59,7 +59,6 @@ _["%%(task_name)s"] = %(operator_name)s(
 %(operator_code)s
     priority_weight=%%(priority_weight)s,
     queue=%%(queue_code)s,
-    command_para='%%(command_para)s',
     pool=%%(pool_code)s,
     dag=dag,
     %%(extra_params)s)
@@ -89,13 +88,6 @@ _["%%(task_name)s"].category = {
         "operator_name": "BashOperator",
         "operator_code": r"""
     bash_command= 'sh /home/airflow/AIRFLOWAPP/a.sh \'\'\'' + r'''%(processed_command)s '''.decode("utf-8") +'\'\'\'',
-""", }
-
-    HIVEQL_PARALLEL_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
-        "before_code": "",
-        "operator_name": "BashOperator",
-        "operator_code": r"""
-    bash_command= 'echo "##para01:"\'\'\'' + r'''%(command_para)s '''.decode("utf-8") +'\'\'\''+ '##echo "para02:"\'\'\''+ r'''%(processed_command)s '''.decode("utf-8") +'\'\'\'',
 """, }
 
     HQL_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
@@ -187,7 +179,6 @@ _["%(task_name)s"] << _["%(upstream_name)s"]
         "time_sensor": TIME_SENSOR_TASK_CODE_TEMPLATE,
         "timedelta_sensor": TIMEDELTA_SENSOR_TASK_CODE_TEMPLATE,
         "hiveql": HIVEQL_TASK_CODE_TEMPLATE,
-        "hiveql_parallel": HIVEQL_PARALLEL_TASK_CODE_TEMPLATE,
         "wait_task_instance": WAIT_TASK_INSTANCE_TASK_CODE_TEMPLATE,
     }
     
