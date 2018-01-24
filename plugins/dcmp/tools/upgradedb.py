@@ -46,7 +46,7 @@ def run_version_0_0_1():
           KEY `category` (`category`),
           KEY `editing` (`editing`),
           KEY `updated_at` (`updated_at`)
-        ) DEFAULT CHARSET=utf8mb4;
+        ) DEFAULT CHARSET=utf8;
     """)
 
     run_sql("""
@@ -66,7 +66,7 @@ def run_version_0_0_1():
           KEY `action` (`action`),
           KEY `version` (`version`),
           KEY `created_at` (`created_at`)
-        ) DEFAULT CHARSET=utf8mb4;
+        ) DEFAULT CHARSET=utf8;
     """)
 
 
@@ -98,7 +98,7 @@ def run_version_0_2_0():
           KEY `is_approver` (`is_approver`),
           KEY `updated_at` (`updated_at`),
           KEY `created_at` (`created_at`)
-        ) DEFAULT CHARSET=utf8mb4;
+        ) DEFAULT CHARSET=utf8;
     """)
 
 
