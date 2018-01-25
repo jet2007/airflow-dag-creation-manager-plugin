@@ -117,9 +117,10 @@ def %(task_name)s_worker(ds, **context):
         "before_code": """
 def %(task_name)s_worker(ds, **context):
     import time
-    print "Waiting Time(minutes) : %s" % %(processed_command)s
+    wait_minutes=int(%(processed_command)s) * 60
+    print "Waiting Time(minutes) : %s" % wait_minutes
     print "Start : %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
-    time.sleep( %(processed_command)s )
+    time.sleep( wait_minutes )
     print "End : %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
     return None
 """,
