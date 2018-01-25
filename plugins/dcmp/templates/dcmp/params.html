@@ -253,7 +253,7 @@ frequency:为预定义的类型,当此值不为custom,则可决定execution_date
 设置字典类型的变量waits<br>
 waits['dag_id'],必填,依赖的dag_id<br>
 waits['task_id'],必填,依赖的task_id<br>
-waits['frequency'],可选,取值=(daily,monthly,yearly,hourly,custom;缺省为daily)<br>
+waits['frequency'],可选,取值=(daily,last_daily,monthly,last_monthly,yearly,last_yearly,hourly,custom;缺省为daily)<br>
 waits['execution_date'],可选,缺省值为本dag_id的运行动态execution_date,建议不填写<br>
 waits['overtime_num'],可选,循环等待的次数(每次1分钟)，缺省为1440，即1天<br>
 waits['execution_date_begin'],可选,当frequency=custom时,建议使用dag_id的运行动态execution_date相关<br>

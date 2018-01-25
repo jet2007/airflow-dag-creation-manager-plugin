@@ -117,8 +117,10 @@ Date.prototype.Format = function (fmt) { //author: meizz
             for(var i=0; i<task_types.length; i++){
                 var task_type = task_types[i];
                 field_html.push('<div role="tabpanel" class="tab-pane ' + (task_type == task[field_name]? 'active': '') + '" id="command_' + task_id + '_' + task_type + '">');
-                if(task_type == "time_sensor"){
+                if(task_type == "wait_time"){
                     field_html.push('<input ' + (readonly? ' readonly="readonly" ': '') + ' style="margin: 0 0 10px;" class="form-control date-range-picker" data-date-format=\'\\d\\a\\t\\e\\t\\i\\m\\e.\\s\\t\\r\\p\\t\\i\\m\\e("HH:mm","%\\H:%\\M").\\t\\i\\m\\e()\' data-role="timepicker" name="command" type="text" value=\'' + (task_type == task[field_name]? task["command"]: '') + '\'>');
+                }else if(task_type == "wait_timedelta"){
+                    field_html.push('<input ' + (readonly? ' readonly="readonly" ': '') + ' class="form-control"  name="command" type="number" value=\'' + (task_type == task[field_name]? task["command"]: '') + '\'>');
                 }else if(task_type == "bash"){
                     field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: '') + '</textarea>');
                     field_html.push(render_help);
@@ -134,13 +136,10 @@ Date.prototype.Format = function (fmt) { //author: meizz
                 }else if(["python", "short_circuit"].indexOf(task_type) != -1){
                     field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: '') + '</textarea>');
                     field_html.push(get_ace_script(task_type, "python"));
-                }else if(task_type == "wait_task_instance"){
+                }else if(task_type == "wait_task"){
                     field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: '') + '</textarea>');
                     field_html.push(render_help);
                     field_html.push(get_ace_script(task_type, "python"));
-                }else if(task_type == "timedelta_sensor"){
-                    field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: '') + '</textarea>');
-                    field_html.push(get_ace_script(task_type, "python", 1));
                 }else{
                     field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: '') + '</textarea>');
                 }

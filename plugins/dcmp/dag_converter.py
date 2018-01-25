@@ -113,6 +113,21 @@ def %(task_name)s_worker(ds, **context):
     python_callable=%(task_name)s_worker,
 """, }
 
+    WAIT_TIMEDELTA_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
+        "before_code": """
+def %(task_name)s_worker(ds, **context):
+    import time
+    print "Waiting Time(minutes) : %s" % %(processed_command)s
+    print "Start : %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    time.sleep( %(processed_command)s )
+    print "End : %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    return None
+""",
+        "operator_name": "PythonOperator",
+        "operator_code": r"""
+    provide_context=True,
+    python_callable=%(task_name)s_worker,
+""", }
 
     WAIT_TASK_INSTANCE_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
         "before_code": """
@@ -122,7 +137,7 @@ def %(task_name)s_worker(ds, **context):
     reload(sys)  
     sys.setdefaultencoding('utf8') 
     from airflow import settings
-    script_folder=settings.AIRFLOW_HOME + "/plugins/dcmp/tools"
+    script_folder=settings.AIRFLOW_HOME + "/plugins/dcmp/bin"
 
     print "######script_folder" + script_folder
     sys.path.append(script_folder)
@@ -176,10 +191,11 @@ _["%(task_name)s"] << _["%(upstream_name)s"]
         "hql": HQL_TASK_CODE_TEMPLATE,
         "python": PYTHON_TASK_CODE_TEMPLATE,
         "short_circuit": SHORT_CIRCUIT_TASK_CODE_TEMPLATE,
-        "time_sensor": TIME_SENSOR_TASK_CODE_TEMPLATE,
-        "timedelta_sensor": TIMEDELTA_SENSOR_TASK_CODE_TEMPLATE,
+        "wait_time": TIME_SENSOR_TASK_CODE_TEMPLATE,
+        #"timedelta_sensor": TIMEDELTA_SENSOR_TASK_CODE_TEMPLATE,
         "hiveql": HIVEQL_TASK_CODE_TEMPLATE,
-        "wait_task_instance": WAIT_TASK_INSTANCE_TASK_CODE_TEMPLATE,
+        "wait_task": WAIT_TASK_INSTANCE_TASK_CODE_TEMPLATE,
+        "wait_timedelta": WAIT_TIMEDELTA_TASK_CODE_TEMPLATE,
     }
     
     JOB_NAME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9_]+$")
