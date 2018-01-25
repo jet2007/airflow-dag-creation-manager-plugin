@@ -120,7 +120,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
                 if(task_type == "wait_time"){
                     field_html.push('<input ' + (readonly? ' readonly="readonly" ': '') + ' style="margin: 0 0 10px;" class="form-control date-range-picker" data-date-format=\'\\d\\a\\t\\e\\t\\i\\m\\e.\\s\\t\\r\\p\\t\\i\\m\\e("HH:mm","%\\H:%\\M").\\t\\i\\m\\e()\' data-role="timepicker" name="command" type="text" value=\'' + (task_type == task[field_name]? task["command"]: '') + '\'>');
                 }else if(task_type == "wait_timedelta"){
-                    field_html.push('<input ' + (readonly? ' readonly="readonly" ': '') + ' class="form-control"  name="command" type="text" value=\'' + (task_type == task[field_name]? task["command"]: '') + '\'>');
+                    field_html.push('<input ' + (readonly? ' readonly="readonly" ': '') + ' class="form-control"  name="command" type="number" value=\'' + (task_type == task[field_name]? task["command"]: '') + '\'>');
                 }else if(task_type == "bash"){
                     field_html.push('<textarea ' + (readonly? ' readonly="readonly" ': '') + ' id="ace_' + task_id + '_' + task_type + '" class="form-control" rows="1" name="command">' + (task_type == task[field_name]? task["command"]: '') + '</textarea>');
                     field_html.push(render_help);

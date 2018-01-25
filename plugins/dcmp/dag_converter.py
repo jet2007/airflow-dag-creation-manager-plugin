@@ -79,7 +79,11 @@ _["%%(task_name)s"].category = {
         "before_code": "",
         "operator_name": "BashOperator",
         "operator_code": r"""
-    bash_command=r'''%(processed_command)s '''.decode("utf-8"),
+    bash_command=r'''
+#!/bin/bash
+set -e
+%(processed_command)s 
+    '''.decode("utf-8"),
 """, }
 
 
