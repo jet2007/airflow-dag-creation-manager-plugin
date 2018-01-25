@@ -116,12 +116,7 @@ def %(task_name)s_worker(ds, **context):
     WAIT_TIMEDELTA_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
         "before_code": """
 def %(task_name)s_worker(ds, **context):
-    import time
-    #wait_minutes=int(%(processed_command)s) * 60
-    #print "Waiting Time(minutes) : %s" % wait_minutes
-    print "Start : %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
-    time.sleep( 3 )
-    #print "End : %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    print "%(processed_command)s"
     return None
 """,
         "operator_name": "PythonOperator",
@@ -439,7 +434,7 @@ return not skip
                 task["task_category_fgcolor"] = task_category["fgcolor"]
                 task["task_category_order"] = task_category["order"]
 
-                if task["task_type"] in ["python", "short_circuit", "wait_task_instance"]:
+                if task["task_type"] in ["python", "short_circuit", "wait_task"]:
                     task["processed_command"] = "\n".join(map(lambda x: "    " + x, task["command"].split("\n")))
                 else:
                     task["processed_command"] = task["command"]

@@ -99,7 +99,7 @@ def command_render(task_type, command):
         'wait_task': lambda x: render(x, lexers.PythonLexer),
         'short_circuit': lambda x: render(x, lexers.PythonLexer),
         'wait_time': lambda x: render(x, lexers.PythonLexer),
-        'wait_timedelta': lambda x: render(x, lexers.PythonLexer),
+        #'wait_timedelta': lambda x: render(x, lexers.PythonLexer),
     }
     if task_type in attr_renderer:
         res = attr_renderer[task_type](command)
