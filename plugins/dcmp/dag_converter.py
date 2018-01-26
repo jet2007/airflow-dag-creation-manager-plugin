@@ -47,9 +47,9 @@ class DAGConverter(object):
         ("email_on_skip_dag", get_bool_code_false, False), ("emails", get_string, False), ("dag_doc_md", get_string, False), ("start_date", get_string, False),
         ("end_date", get_string, False))
     TASK_ITEMS = (("task_name", get_string, True), ("task_type", get_string, True), ("command", get_string, False) ,
-        ("priority_weight", get_int, False), ("upstreams", get_list, False), ("queue_pool", get_string, False) 
-        ("task_category", get_string, False),  ("task_more_para", get_int, False),)
-    TASK_EXTRA_ITEMS = (("retries", get_int, "retries=%s,"),("task_more_para", get_int, "task_more_para=%s,"), ("retry_delay_minutes", get_int, "retry_delay=timedelta(minutes=%s),"), )
+        ("priority_weight", get_int, False), ("upstreams", get_list, False), ("queue_pool", get_string, False) ,
+        ("task_category", get_string, False),  ("task_more_para", get_string, False),)
+    TASK_EXTRA_ITEMS = (("retries", get_int, "retries=%s,"),("task_more_para", get_string, "task_more_para='%s',"), ("retry_delay_minutes", get_int, "retry_delay=timedelta(minutes=%s),"), )
     
     DAG_CODE_TEMPLATE = load_dag_template("dag_code")
     
