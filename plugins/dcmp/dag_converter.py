@@ -47,7 +47,7 @@ class DAGConverter(object):
         ("email_on_skip_dag", get_bool_code_false, False), ("emails", get_string, False), ("dag_doc_md", get_string, False), ("start_date", get_string, False),
         ("end_date", get_string, False))
     TASK_ITEMS = (("task_name", get_string, True), ("task_type", get_string, True), ("command", get_string, False) ,
-        ("priority_weight", get_int, False), ("upstreams", get_list, False), ("queue_pool", get_string, False),
+        ("priority_weight", get_int, False), ("upstreams", get_list, False), ("queue_pool", get_string, False),("task_more_para", get_string, False),
         ("task_category", get_string, False), )
     TASK_EXTRA_ITEMS = (("retries", get_int, "retries=%s,"), ("retry_delay_minutes", get_int, "retry_delay=timedelta(minutes=%s),"), )
     
@@ -58,6 +58,7 @@ _["%%(task_name)s"] = %(operator_name)s(
     task_id='%%(task_name)s',
 %(operator_code)s
     priority_weight=%%(priority_weight)s,
+    task_more_para='%%(task_more_para)s',
     queue=%%(queue_code)s,
     pool=%%(pool_code)s,
     dag=dag,
@@ -82,7 +83,7 @@ _["%%(task_name)s"].category = {
     bash_command=r'''
 #!/bin/bash
 set -e
-%(processed_command)s 
+%(processed_command)s
     '''.decode("utf-8"),
 """, }
 
@@ -124,7 +125,6 @@ def %(task_name)s_worker(ds, **context):
     import time
     wait_minutes=%(processed_command)s * 60
     time.sleep( wait_minutes )
-    print "等待%s分钟" % wait_minutes
     return None
 """,
         "operator_name": "PythonOperator",
