@@ -206,7 +206,7 @@ _["%(task_name)s"] << _["%(upstream_name)s"]
         "wait_time": TIME_SENSOR_TASK_CODE_TEMPLATE,
         #"timedelta_sensor": TIMEDELTA_SENSOR_TASK_CODE_TEMPLATE,
         "hiveql": HIVEQL_TASK_CODE_TEMPLATE,
-        "sql": SQL_TASK_CODE_TEMPLATE
+        "sql": SQL_TASK_CODE_TEMPLATE,
         "wait_task": WAIT_TASK_INSTANCE_TASK_CODE_TEMPLATE,
         "wait_timedelta": WAIT_TIMEDELTA_TASK_CODE_TEMPLATE,
     }

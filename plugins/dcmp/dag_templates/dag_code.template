@@ -10,8 +10,9 @@ from dateutil.relativedelta import relativedelta
 from airflow import DAG
 from airflow import settings
 from airflow.models import Variable, TaskInstance, DagRun
-from airflow.operators.bash_operator import BashOperator
+from airflow.operators import SqlSensor
 from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.hive_operator import HiveOperator
 from airflow.operators.hive_operator import HiveOperator
 from airflow.operators.python_operator import PythonOperator, ShortCircuitOperator
 from airflow.operators.sensors import TimeSensor, TimeDeltaSensor
