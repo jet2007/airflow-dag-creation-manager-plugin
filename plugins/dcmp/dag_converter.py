@@ -95,6 +95,14 @@ echo "%(task_more_para)s"
     bash_command= 'echo  \'\'\'' + r'''%(processed_command)s '''.decode("utf-8") +'\'\'\'',
 """, }
 
+    SQL_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
+        "before_code": "",
+        "operator_name": "SqlSensor",
+        "operator_code": r"""
+    sql=r'''%(processed_command)s '''.decode("utf-8"),
+    conn_id=r'''%(task_more_para)s'''.decode("utf-8"),
+""", }
+
     HQL_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
         "before_code": "",
         "operator_name": "HiveOperator",
@@ -198,6 +206,7 @@ _["%(task_name)s"] << _["%(upstream_name)s"]
         "wait_time": TIME_SENSOR_TASK_CODE_TEMPLATE,
         #"timedelta_sensor": TIMEDELTA_SENSOR_TASK_CODE_TEMPLATE,
         "hiveql": HIVEQL_TASK_CODE_TEMPLATE,
+        "sql": SQL_TASK_CODE_TEMPLATE
         "wait_task": WAIT_TASK_INSTANCE_TASK_CODE_TEMPLATE,
         "wait_timedelta": WAIT_TIMEDELTA_TASK_CODE_TEMPLATE,
     }
