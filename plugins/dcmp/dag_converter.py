@@ -39,7 +39,7 @@ def load_dag_template(template_name):
 
 class DAGConverter(object):
     DAG_ITEMS = (("dag_name", get_string, True), ("cron", get_string, True), ("category", get_string, True),
-        ("retries", get_int, False), ("retry_delay_minutes", get_int, False), ("task_more_para", get_int, False), ("email_on_failure", get_bool_code_true, False),
+        ("retries", get_int, False), ("retry_delay_minutes", get_int, False), ("email_on_failure", get_bool_code_true, False),
         ("email_on_retry", get_bool_code_false, False), ("depends_on_past", get_bool_code_false, False),
         ("concurrency", lambda x: int(x) if x else 16, False), ("max_active_runs", lambda x: int(x) if x else 16, False),
         ("add_start_task", get_bool_code_false, False), ("add_end_task", get_bool_code_false, False),
@@ -48,7 +48,7 @@ class DAGConverter(object):
         ("end_date", get_string, False))
     TASK_ITEMS = (("task_name", get_string, True), ("task_type", get_string, True), ("command", get_string, False) ,
         ("priority_weight", get_int, False), ("upstreams", get_list, False), ("queue_pool", get_string, False) 
-        ("task_category", get_string, False), )
+        ("task_category", get_string, False),  ("task_more_para", get_int, False),)
     TASK_EXTRA_ITEMS = (("retries", get_int, "retries=%s,"),("task_more_para", get_int, "task_more_para=%s,"), ("retry_delay_minutes", get_int, "retry_delay=timedelta(minutes=%s),"), )
     
     DAG_CODE_TEMPLATE = load_dag_template("dag_code")
