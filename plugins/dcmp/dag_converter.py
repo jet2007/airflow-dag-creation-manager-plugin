@@ -100,7 +100,7 @@ echo "%(task_more_para)s"
         "operator_name": "MySqlOperator",
         "operator_code": r"""
     sql=r'''%(processed_command)s '''.decode("utf-8"),
-    conn_id=r'''%(task_more_para)s'''.decode("utf-8"),
+    mysql_conn_id=r'''%(task_more_para)s'''.decode("utf-8"),
 """, }
 
     HQL_TASK_CODE_TEMPLATE = BASE_TASK_CODE_TEMPLATE % {
