@@ -9,7 +9,7 @@ from airflow import configuration
 #TASK_TYPES = ["bash", "hql", "python", "short_circuit", "time_sensor", "timedelta_sensor","hiveql"]
 #TASK_TYPES = ["hiveql","bash",  "python" ,"wait_task_instance" , "time_sensor", "timedelta_sensor","hql", "short_circuit"]
 
-TASK_TYPES = ["hiveql","bash" ,"sql", "python" ,"wait_task" , "wait_time", "wait_timedelta"]
+TASK_TYPES = ["hiveql","bash" ,"mysql", "python" ,"wait_task" , "wait_time", "wait_timedelta"]
 
 
 
