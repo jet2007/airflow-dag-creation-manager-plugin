@@ -601,7 +601,7 @@ class DagCreationManager(BaseView):
         return res
 
 
-dag_creation_manager_view = DagCreationManager(category="Admin", name="DAG Creation Manager")
+dag_creation_manager_view = DagCreationManager(category="Admin", name="Dag Manager")
 
 dag_creation_manager_bp = Blueprint(
     "dag_creation_manager_bp",

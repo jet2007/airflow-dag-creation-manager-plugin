@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+'''
 import airflow
 from airflow import models, settings
 from airflow.contrib.auth.backends.password_auth import PasswordUser
@@ -10,6 +11,7 @@ u.password = '123456'
 u.email = 'admin@example.com'
 session.commit()
 session.close()
+'''
 
 
 
