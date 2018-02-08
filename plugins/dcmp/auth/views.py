@@ -78,15 +78,15 @@ if configuration.get('webserver', 'auth_backend').endswith('dcmp.auth.backends.p
     from dcmp.auth.backends.password_auth import PasswordUser
     
     class PasswordUserModelView(wwwutils.SuperUserMixin, AirflowModelView):
-        verbose_name = "Password User"
-        verbose_name_plural = "Password Users"
+        verbose_name = "User Manager"
+        verbose_name_plural = "User Manager"
         column_default_sort = 'username'
         column_list = ('username', 'email', )
         form_columns = ('username', 'email', 'password', )
         form_overrides = dict(_password=PasswordField)
     
     
-    password_user_model_view = PasswordUserModelView(PasswordUser, settings.Session, category="Admin", name="Password Users")
+    password_user_model_view = PasswordUserModelView(PasswordUser, settings.Session, category="Admin", name="User Manager")
     
     
     class DcmpUserProfilePlugin(AirflowPlugin):
