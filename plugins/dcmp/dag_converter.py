@@ -211,7 +211,7 @@ _["%(task_name)s"] << _["%(upstream_name)s"]
         "wait_timedelta": WAIT_TIMEDELTA_TASK_CODE_TEMPLATE,
     }
     
-    JOB_NAME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9_.]+$")
+    JOB_NAME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9_-]+$")
 
     def check_job_name(self, job_name):
         return bool(self.JOB_NAME_RE.match(job_name))
