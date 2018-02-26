@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 __author__ = "yanghanbing"
-__version__ = "0.2.1"
+__version__ = "0.3"  # by jet.cai
 
 import logging
 import json
@@ -10,10 +10,17 @@ from functools import wraps
 from collections import OrderedDict
 
 import airflow
+
+from airflow import configuration as conf
+
+
 from airflow.plugins_manager import AirflowPlugin
 from airflow.www.app import csrf
 from airflow.utils.db import provide_session
-from flask import Blueprint, Markup, request, jsonify, flash
+from flask import Blueprint, jsonify, flash
+from flask import (
+    abort, redirect, url_for, request, Markup, Response, current_app, render_template,
+    make_response)
 from flask_admin import BaseView, expose
 from flask_admin.babel import gettext
 from pygments import highlight, lexers
@@ -23,6 +30,11 @@ from dcmp import settings as dcmp_settings
 from dcmp.models import DcmpDag, DcmpDagConf
 from dcmp.dag_converter import dag_converter
 from dcmp.utils import LogStreamContext, search_conf_iter
+
+FILTER_BY_OWNER = False
+if conf.getboolean('webserver', 'FILTER_BY_OWNER'):
+    # filter_by_owner if authentication is enabled and filter_by_owner is true
+    FILTER_BY_OWNER = True
 
 
 def login_required(func):
@@ -212,7 +224,43 @@ class DagCreationManager(BaseView):
             (COMMAND, {"operations": ["contains"], "no_filters": True}),
         ))
         confs = OrderedDict()
-        dcmp_dags = session.query(DcmpDag).order_by(DcmpDag.dag_name).filter(*request_args_filter.filters)
+
+        current_user = get_current_user()
+        curr_user=airflow.login.current_user
+
+        #is_superuser = False
+        #try:
+        #    result = session.execute(" select user_id from dcmp_user_profile where is_superuser=1 and user_id = %s"  %   current_user.id )
+        #    if result.rowcount > 0:
+        #        is_superuser = True
+        #    else:
+        #        is_superuser = False
+        #except Exception, e:
+        #    is_superuser = False
+
+        
+
+
+        do_filter = FILTER_BY_OWNER and (not curr_user.is_superuser())
+        owner_mode = conf.get('webserver', 'OWNER_MODE').strip().lower()
+
+        #logging.warning('############--current_user!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        #logging.warning(current_user.username)
+        #logging.warning(current_user.id)
+        #logging.warning(owner_mode)
+        #logging.warning(curr_user.is_superuser())
+        #logging.warning(curr_user.user.username)
+        #logging.warning('############--current_user')
+
+        # ldapgroup方式是没有处理
+        if do_filter and ( owner_mode == 'user')  :
+            dcmp_dags = session.query(DcmpDag).order_by(DcmpDag.dag_name).filter(DcmpDag.last_editor_user_name == curr_user.user.username
+                                                                                  ,*request_args_filter.filters)
+        else:
+            dcmp_dags = session.query(DcmpDag).order_by(DcmpDag.dag_name).filter(*request_args_filter.filters)
+
+
+
         dcmp_dags_count = dcmp_dags.count()
         dcmp_dags = dcmp_dags[:]
         for dcmp_dag in dcmp_dags:
@@ -235,6 +283,7 @@ class DagCreationManager(BaseView):
                         return True
                 return False
             dcmp_dags = filter(filter_dcmp_dags_by_command, dcmp_dags)
+
 
         search = request.args.get("search", "")
         if search:
