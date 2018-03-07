@@ -25,7 +25,8 @@ from flask_admin import BaseView, expose
 from flask_admin.babel import gettext
 from pygments import highlight, lexers
 from pygments.formatters import HtmlFormatter
-
+from airflow.www import utils as wwwutils
+import socket
 from dcmp import settings as dcmp_settings
 from dcmp.models import DcmpDag, DcmpDagConf
 from dcmp.dag_converter import dag_converter
@@ -112,7 +113,7 @@ def command_render(task_type, command):
         'wait_task': lambda x: render(x, lexers.PythonLexer),
         'short_circuit': lambda x: render(x, lexers.PythonLexer),
         'wait_time': lambda x: render(x, lexers.PythonLexer),
-        #'wait_timedelta': lambda x: render(x, lexers.PythonLexer),
+        #'wait_timedelta': lambda: render(x, lexers.PythonLexer),
     }
     if task_type in attr_renderer:
         res = attr_renderer[task_type](command)
@@ -228,32 +229,10 @@ class DagCreationManager(BaseView):
         current_user = get_current_user()
         curr_user=airflow.login.current_user
 
-        #is_superuser = False
-        #try:
-        #    result = session.execute(" select user_id from dcmp_user_profile where is_superuser=1 and user_id = %s"  %   current_user.id )
-        #    if result.rowcount > 0:
-        #        is_superuser = True
-        #    else:
-        #        is_superuser = False
-        #except Exception, e:
-        #    is_superuser = False
-
-        
-
-
         do_filter = FILTER_BY_OWNER and (not curr_user.is_superuser())
         owner_mode = conf.get('webserver', 'OWNER_MODE').strip().lower()
 
-        #logging.warning('############--current_user!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-        #logging.warning(current_user.username)
-        #logging.warning(current_user.id)
-        #logging.warning(owner_mode)
-        #logging.warning(curr_user.is_superuser())
-        #logging.warning(curr_user.user.username)
-        #logging.warning('############--current_user')
-
-        # ldapgroup方式是没有处理
-        if do_filter and ( owner_mode == 'user')  :
+        if wwwutils.get_filter_by_user()  :
             dcmp_dags = session.query(DcmpDag).order_by(DcmpDag.dag_name).filter(DcmpDag.last_editor_user_name == curr_user.user.username
                                                                                   ,*request_args_filter.filters)
         else:
@@ -357,18 +336,37 @@ class DagCreationManager(BaseView):
     @login_required
     @provide_session
     def edit(self, session=None):
+        dag_name = request.args.get("dag_name")
+        if dag_name and len(dag_name)>0:
+            # 增加限制非有权限的用户dagid，不能查看
+            if ( not wwwutils.get_filter_by_user_dagid(dag_name) ) :
+                return render_template('airflow/circles.html', hostname=socket.getfqdn())
         return self._edit("dcmp/edit.html", session=session)
 
     @expose("/graph")
     @login_required
     @provide_session
     def graph(self, session=None):
+
+        dag_name = request.args.get("dag_name")
+        if dag_name and len(dag_name)>0:
+            # 增加限制非有权限的用户dagid，不能查看
+            if ( not wwwutils.get_filter_by_user_dagid(dag_name) ) :
+                return render_template('airflow/circles.html', hostname=socket.getfqdn())
+
         return self._edit("dcmp/graph.html", session=session)
 
     @expose("/raw")
     @login_required
     @provide_session
     def raw(self, session=None):
+
+        dag_name = request.args.get("dag_name")
+        if dag_name and len(dag_name)>0:
+            # 增加限制非有权限的用户dagid，不能查看
+            if ( not wwwutils.get_filter_by_user_dagid(dag_name) ) :
+                return render_template('airflow/circles.html', hostname=socket.getfqdn())
+
         return self._edit("dcmp/raw.html", session=session)
 
     @expose("/details")
@@ -378,6 +376,11 @@ class DagCreationManager(BaseView):
         conf = None
         dcmp_dag = None
         dag_name = request.args.get("dag_name")
+        if dag_name and len(dag_name)>0:
+            # 增加限制非有权限的用户dagid，不能查看
+            if ( not wwwutils.get_filter_by_user_dagid(dag_name) ) :
+                return render_template('airflow/circles.html', hostname=socket.getfqdn())
+
         highlight = request.args.get("highlight")
         if dag_name:
             dcmp_dag = session.query(DcmpDag).filter(
@@ -452,6 +455,11 @@ class DagCreationManager(BaseView):
         conf = None
         dcmp_dag = None
         dag_name = request.args.get("dag_name")
+        if dag_name and len(dag_name)>0:
+            # 增加限制非有权限的用户dagid，不能查看
+            if ( not wwwutils.get_filter_by_user_dagid(dag_name) ) :
+                return render_template('airflow/circles.html', hostname=socket.getfqdn())
+
         version1 = request.args.get("version1")
         version2 = request.args.get("version2")
         if dag_name:
@@ -650,7 +658,7 @@ class DagCreationManager(BaseView):
         return res
 
 
-dag_creation_manager_view = DagCreationManager(category="Admin", name="Dag Manager")
+dag_creation_manager_view = DagCreationManager(category="Manager", name="Dag Manager")
 
 dag_creation_manager_bp = Blueprint(
     "dag_creation_manager_bp",
