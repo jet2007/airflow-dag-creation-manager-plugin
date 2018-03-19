@@ -80,144 +80,457 @@
 
 {% block body %}
 {% raw %}
+
 <div id="main-container" class="container">
-    <h2>Params</h2>
+    <h2>参数：动态execution_date<AIRFLOW定义></h2>
     <div class="wy-table-responsive">
         <table border="1" class="docutils">
             <colgroup>
-                <col width="38%">
-                <col width="62%">
+                <col width="20%">
+                <col width="80%">
             </colgroup>
             <thead valign="bottom">
                 <tr class="row-odd">
                 <th class="head">分类</th>
-                <th class="head">Variable</th>
-                <th class="head">Description</th>
+                <th class="head">说明(以作业execution_date为主日期)</th>
             </tr>
             </thead>
             <tbody valign="top">
-
-
                 <tr class="row-even">
-                    <td>动态execution_date</td>
+                    <td>AIRFLOW定义</td>
                     <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(days=+0)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
-                        </code>
-                    </td>
-                    <td>操作日execution_date
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD</span></code>
-                    </td>
-                </tr>
-
-                <tr class="row-odd">
-                    <td>动态execution_date</td>
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(day=-1)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
-                        </code>
-                    </td>
-                    <td>操作日的前1天
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD</span></code>
-                    </td>
-                </tr>
-
-                <tr class="row-even">
-                    <td>动态execution_date</td>
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(day=1,months=+1,days=-1)).strftime("%Y-%m-%d") </span><span class="pre">}}</span>
-                        </code>
-                    </td>
-                    <td>操作日的当月最后1天
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD</span></code>
-                    </td>
-                </tr>
-
-                <tr class="row-odd">
-                    <td>动态execution_date</td>
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre"> (execution_date + macros.dateutil.relativedelta.relativedelta(day=1,months=+1,days=-1)).strftime("%Y-%m-%d %H:%M:%S") </span><span class="pre">}}</span>
-                        </code>
-                    </td>
-                    <td>操作日的当月最后1天
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD HH:MI:DD</span></code>
-                    </td>
-                </tr>
-
-
-                <tr class="row-even">
-                    <td>动态当前日期+时间</td>
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{</span><span class="pre">params.now</span><span class="pre">}}</span>
-                        </code>
-                    </td>
-                    <td>今天+时间
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD HH:MI:SS</span></code>
+                        execution_date  &#09;&#09;  作业执行时间，datetime.datetime类型；基准值为[2018-01-08 00:42:00],都基于此计算; <br/>
+                        使用方法: {{ execution_date }} ,下同
                     </td>
                 </tr>
                 <tr class="row-odd">
-                    <td>动态当前日期+时间</td>
+                    <td>AIRFLOW定义</td>
                     <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{ params.today }},{{ params.yesterday }},{{ params.tomorrow }}</span>
-                        </code>
+                            ds  &#09;&#09;  2018-01-08  <br/>
+                            yesterday_ds    &#09;&#09;  2018-01-07  <br/>
+                            tomorrow_ds &#09;&#09;  2018-01-09  <br/>
+                            ds_nodash   &#09;&#09;  20180108    <br/>
+                            yesterday_ds_nodash &#09;&#09;  20180107    <br/>
+                            tomorrow_ds_nodash  &#09;&#09;  20180109    <br/>
                     </td>
-                    <td>今天,昨天,明天
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD</span></code>
-                    </td>
-                </tr>
-                <tr class="row-even">
-                    <td>动态当前日期+时间</td>
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{ params.this_month }},{{ params.last_month }},{{ params.next_month }}</span>
-                        </code>
-                    </td>
-                    <td>当月,上一月,下一月
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM</span></code>
-                    </td>
-                </tr>
-                <tr class="row-odd">
-                    <td>动态当前日期+时间</td>
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{ params.this_month_first_day }},{{ params.last_month_first_day }},{{ params.next_month_last_day }}</span>
-                        </code>
-                    </td>
-                    <td>当月第1天,上一月第1天,下一月第1天
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD</span></code>
-                    </td>
-                </tr>
-                <tr class="row-even">
-                    <td>动态当前日期+时间</td>
-                    <td>
-                        <code class="docutils literal">
-                            <span class="pre">{{ params.this_year }},{{ params.last_year }},{{ params.next_year }}</span>
-                        </code>
-                    </td>
-                    <td>今年,去年,明年
-                        <code class="docutils literal">
-                            <span class="pre">YYYY-MM-DD</span></code>
-                    </td>
-                </tr>
-             
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
 
+
+
+<div id="main-container" class="container">
+    <h2>参数：动态execution_date<扩展></h2>
+    <div class="wy-table-responsive">
+        <table border="1" class="docutils">
+            <colgroup>
+                <col width="20%">
+                <col width="80%">
+            </colgroup>
+            <thead valign="bottom">
+                <tr class="row-odd">
+                <th class="head">分类</th>
+                <th class="head">说明(以作业execution_date为主日期)</th>
+            </tr>
+            </thead>
+            <tbody valign="top">
+                <tr class="row-even">
+                    <td>字典execution_dates</td>
+                    <td>
+                        字典类型execution_dates，包含了多个预定义的动态日期值; <br/>
+                        一、使用方法: {{ execution_dates.exec_dm_today }} ，其值== {{ execution_date }}，即基准值[2018-01-08 00:42:00]<br/>
+                        二、execution_dates的元素值的类型均为string,  <br/>
+                        &nbsp &nbsp &nbsp &nbsp 技术实现，示例'exec_dt_prev_month_firstday' : (execution_date + relativedelta(day=1,months=-1)).strftime("%Y-%m-%d") <br/>
+                        三、缩写词含义(exec=execution_date, dt=date, dm=datetime, tm=time, mn=month, yr=year <br/>
+                        &nbsp &nbsp &nbsp &nbsp prev=上一个, next=下一个,this=这一个, firstday=第1天, lastday=最后1天,nodash=无符号)  <br/>
+                        四、下方预定义的日期值是以execution_date为基准值，进行计算得出
+
+
+                    </td>
+                </tr>
+                <tr class="row-odd">
+                    <td>字典execution_dates</td>
+                    <td>
+  exec_dt_today 2018-01-08
+, exec_dt_yesterday 2018-01-07
+, exec_dt_tomorrow  2018-01-09 <br/>
+, exec_dm_today 2018-01-08 00:42:00
+, exec_dm_yesterday 2018-01-07 00:42:00
+, exec_dm_tomorrow  2018-01-09 00:42:00 <br/>
+
+, exec_dm_nodash_today  20180108004200
+, exec_dm_nodash_yesterday  20180107004200
+, exec_dm_nodash_tomorrow   20180109004200 <br/>
+
+, exec_tm_today 00:42:00
+, exec_tm_nodash_today  004200 <br/>
+
+, exec_dt_prev_2day 2018-01-06
+, exec_dt_prev_3day 2018-01-05
+, exec_dt_prev_7day 2018-01-01
+, exec_dt_prev_14day    2017-12-25 <br/>
+, exec_dt_this_month_firstday   2018-01-01
+, exec_dt_this_month_lastday    2018-01-31 <br/>
+, exec_dt_prev_month_firstday   2017-12-01
+, exec_dt_prev_month_lastday    2017-12-31
+, exec_dt_prev_month_today  2017-12-08   <br/>
+, exec_dt_prev_3month_firstday  2017-10-01
+, exec_dt_prev_3month_lastday   2017-10-31
+, exec_dt_prev_3month_today 2017-10-08 <br/>
+, exec_dt_next_month_firstday   2018-02-01
+, exec_dt_next_month_lastday    2018-02-28
+, exec_dt_next_month_today  2018-02-08 <br/>
+, exec_dt_next_3month_firstday  2018-04-01
+, exec_dt_next_3month_lastday   2018-04-30
+, exec_dt_next_3month_today 2018-04-08 <br/>
+, exec_dt_this_year_firstday    2018-01-01
+, exec_dt_this_year_lastday 2018-12-31
+, exec_dt_next_year_firstday    2019-01-01 <br/>
+, exec_dt_next_year_lastday 2018-12-31
+, exec_dt_next_year_today   2019-01-08 <br/>
+, exec_dt_next_year_prev_month_today    2018-12-08
+, exec_dt_next_year_next_month_today    2019-02-08  <br/>
+, exec_dt_prev_year_firstday    2017-01-01
+, exec_dt_prev_year_lastday 2017-12-31
+, exec_dt_prev_year_today   2017-01-08 <br/>
+, exec_dt_prev_year_prev_month_today    2016-12-08
+, exec_dt_prev_year_next_month_today    2017-02-08 <br/>
+, exec_mn_this_month    2018-01
+, exec_mn_prev_month    2017-12
+, exec_mn_prev_2month   2017-11
+, exec_mn_prev_3month   2017-10
+, exec_mn_prev_6month   2017-07 <br/>
+, exec_mn_next_month    2018-02
+, exec_mn_next_2month   2018-03
+, exec_mn_next_3month   2018-04
+, exec_mn_next_6month   2018-07 <br/>
+, exec_mn_prev_year_this_month  2017-01
+, exec_mn_prev_year_prev_month  2016-12
+, exec_mn_prev_year_next_month  2017-02 <br/>
+, exec_mn_next_year_this_month  2019-01
+, exec_mn_next_year_prev_month  2018-12
+, exec_mn_next_year_next_month  2019-02 <br/>
+, exec_yr_prev_year 2017
+, exec_yr_prev_2year    2016
+, exec_yr_prev_3year    2015
+, exec_yr_next_year 2019
+, exec_yr_next_2year    2020
+, exec_yr_next_3year    2021 <br/><br/>
+, exec_dt_nodash_today  20180108
+, exec_dt_nodash_yesterday  20180107
+, exec_dt_nodash_tomorrow   20180109 <br/>
+, exec_dt_nodash_prev_2day  20180106
+, exec_dt_nodash_prev_3day  20180105
+, exec_dt_nodash_prev_7day  20180101
+, exec_dt_nodash_prev_14day 20171225 <br/>
+, exec_dt_nodash_this_month_firstday    20180101
+, exec_dt_nodash_this_month_lastday 20180131 <br/>
+, exec_dt_nodash_prev_month_firstday    20171201
+, exec_dt_nodash_prev_month_lastday 20171231
+, exec_dt_nodash_prev_month_today   20171208 <br/>
+, exec_dt_nodash_prev_3month_firstday   20171001
+, exec_dt_nodash_prev_3month_lastday    20171031
+, exec_dt_nodash_prev_3month_today  20171008 <br/>
+, exec_dt_nodash_next_month_firstday    20180201
+, exec_dt_nodash_next_month_lastday 20180228
+, exec_dt_nodash_next_month_today   20180208 <br/>
+, exec_dt_nodash_next_3month_firstday   20180401
+, exec_dt_nodash_next_3month_lastday    20180430
+, exec_dt_nodash_next_3month_today  20180408 <br/>
+, exec_dt_nodash_this_year_firstday 20180101
+, exec_dt_nodash_this_year_lastday  20181231 <br/>
+, exec_dt_nodash_next_year_firstday 20190101
+, exec_dt_nodash_next_year_lastday  20181231
+, exec_dt_nodash_next_year_today    20190108 <br/>
+, exec_dt_nodash_next_year_prev_month_today 20181208
+, exec_dt_nodash_next_year_next_month_today 20190208 <br/>
+, exec_dt_nodash_prev_year_firstday 20170101
+, exec_dt_nodash_prev_year_lastday  20171231
+, exec_dt_nodash_prev_year_today    20170108 <br/>
+, exec_dt_nodash_prev_year_prev_month_today 20161208
+, exec_dt_nodash_prev_year_next_month_today 20170208 <br/>
+, exec_mn_nodash_this_month 201801
+, exec_mn_nodash_prev_month 201712
+, exec_mn_nodash_prev_2month    201711 <br/>
+, exec_mn_nodash_prev_3month    201710
+, exec_mn_nodash_prev_6month    201707 <br/>
+, exec_mn_nodash_next_month 201802
+, exec_mn_nodash_next_2month    201803
+, exec_mn_nodash_next_3month    201804
+, exec_mn_nodash_next_6month    201807 <br/>
+, exec_mn_nodash_prev_year_this_month   201701
+, exec_mn_nodash_prev_year_prev_month   201612
+, exec_mn_nodash_prev_year_next_month   201702 <br/>
+, exec_mn_nodash_next_year_this_month   201901
+, exec_mn_nodash_next_year_prev_month   201812
+, exec_mn_nodash_next_year_next_month   201902 <br/>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<div id="main-container" class="container">
+    <h2>参数：当前日期</h2>
+    <div class="wy-table-responsive">
+        <table border="1" class="docutils">
+            <colgroup>
+                <col width="20%">
+                <col width="80%">
+            </colgroup>
+            <thead valign="bottom">
+                <tr class="row-odd">
+                <th class="head">分类</th>
+                <th class="head">说明(当前日期current_date为主日期)</th>
+            </tr>
+            </thead>
+            <tbody valign="top">
+                <tr class="row-even">
+                    <td>字典current_dates</td>
+                    <td>
+                        字典类型current_dates，包含了多个预定义的当前日期值; <br/>
+                        一、使用方法: {{ current_dates.curr_dm_today }} ，等价于NOW值，基准值[2018-01-08 00:42:00]<br/>
+                        二、current_dates的元素值的类型均为string,  <br/>
+                        &nbsp &nbsp &nbsp &nbsp  技术实现，示例'curr_dt_prev_month_firstday' : (now + relativedelta(day=1,months=-1)).strftime("%Y-%m-%d") <br/>
+                        三、缩写词含义(curr=current_dates, dt=date, dm=datetime, tm=time, mn=month, yr=year <br/>
+                        &nbsp &nbsp &nbsp &nbsp prev=上一个, next=下一个,this=这一个, firstday=第1天, lastday=最后1天,nodash=无符号)  <br/>
+                        四、下方预定义的日期值是以curr_dm_today为基准值，进行计算得出
+
+
+                    </td>
+                </tr>
+                <tr class="row-odd">
+                    <td>字典execution_dates</td>
+                    <td>
+  curr_dt_today 2018-01-08
+, curr_dt_yesterday 2018-01-07
+, curr_dt_tomorrow  2018-01-09 <br/>
+, curr_dm_today 2018-01-08 00:42:00
+, curr_dm_yesterday 2018-01-07 00:42:00
+, curr_dm_tomorrow  2018-01-09 00:42:00 <br/>
+
+, curr_dm_nodash_today  20180108004200
+, curr_dm_nodash_yesterday  20180107004200
+, curr_dm_nodash_tomorrow   20180109004200 <br/>
+
+, curr_tm_today 00:42:00
+, curr_tm_nodash_today  004200 <br/>
+
+, curr_dt_prev_2day 2018-01-06
+, curr_dt_prev_3day 2018-01-05
+, curr_dt_prev_7day 2018-01-01
+, curr_dt_prev_14day    2017-12-25 <br/>
+, curr_dt_this_month_firstday   2018-01-01
+, curr_dt_this_month_lastday    2018-01-31 <br/>
+, curr_dt_prev_month_firstday   2017-12-01
+, curr_dt_prev_month_lastday    2017-12-31
+, curr_dt_prev_month_today  2017-12-08   <br/>
+, curr_dt_prev_3month_firstday  2017-10-01
+, curr_dt_prev_3month_lastday   2017-10-31
+, curr_dt_prev_3month_today 2017-10-08 <br/>
+, curr_dt_next_month_firstday   2018-02-01
+, curr_dt_next_month_lastday    2018-02-28
+, curr_dt_next_month_today  2018-02-08 <br/>
+, curr_dt_next_3month_firstday  2018-04-01
+, curr_dt_next_3month_lastday   2018-04-30
+, curr_dt_next_3month_today 2018-04-08 <br/>
+, curr_dt_this_year_firstday    2018-01-01
+, curr_dt_this_year_lastday 2018-12-31
+, curr_dt_next_year_firstday    2019-01-01 <br/>
+, curr_dt_next_year_lastday 2018-12-31 
+, curr_dt_next_year_today   2019-01-08 <br/>
+, curr_dt_next_year_prev_month_today    2018-12-08
+, curr_dt_next_year_next_month_today    2019-02-08  <br/>
+, curr_dt_prev_year_firstday    2017-01-01
+, curr_dt_prev_year_lastday 2017-12-31
+, curr_dt_prev_year_today   2017-01-08 <br/>
+, curr_dt_prev_year_prev_month_today    2016-12-08
+, curr_dt_prev_year_next_month_today    2017-02-08 <br/>
+, curr_mn_this_month    2018-01
+, curr_mn_prev_month    2017-12
+, curr_mn_prev_2month   2017-11
+, curr_mn_prev_3month   2017-10
+, curr_mn_prev_6month   2017-07 <br/>
+, curr_mn_next_month    2018-02
+, curr_mn_next_2month   2018-03
+, curr_mn_next_3month   2018-04
+, curr_mn_next_6month   2018-07 <br/>
+, curr_mn_prev_year_this_month  2017-01
+, curr_mn_prev_year_prev_month  2016-12
+, curr_mn_prev_year_next_month  2017-02 <br/>
+, curr_mn_next_year_this_month  2019-01
+, curr_mn_next_year_prev_month  2018-12
+, curr_mn_next_year_next_month  2019-02 <br/>
+, curr_yr_prev_year 2017
+, curr_yr_prev_2year    2016
+, curr_yr_prev_3year    2015
+, curr_yr_next_year 2019
+, curr_yr_next_2year    2020
+, curr_yr_next_3year    2021 <br/><br/>
+, curr_dt_nodash_today  20180108
+, curr_dt_nodash_yesterday  20180107
+, curr_dt_nodash_tomorrow   20180109 <br/>
+, curr_dt_nodash_prev_2day  20180106
+, curr_dt_nodash_prev_3day  20180105
+, curr_dt_nodash_prev_7day  20180101
+, curr_dt_nodash_prev_14day 20171225 <br/>
+, curr_dt_nodash_this_month_firstday    20180101
+, curr_dt_nodash_this_month_lastday 20180131 <br/>
+, curr_dt_nodash_prev_month_firstday    20171201
+, curr_dt_nodash_prev_month_lastday 20171231
+, curr_dt_nodash_prev_month_today   20171208 <br/>
+, curr_dt_nodash_prev_3month_firstday   20171001
+, curr_dt_nodash_prev_3month_lastday    20171031
+, curr_dt_nodash_prev_3month_today  20171008 <br/>
+, curr_dt_nodash_next_month_firstday    20180201
+, curr_dt_nodash_next_month_lastday 20180228
+, curr_dt_nodash_next_month_today   20180208 <br/>
+, curr_dt_nodash_next_3month_firstday   20180401
+, curr_dt_nodash_next_3month_lastday    20180430
+, curr_dt_nodash_next_3month_today  20180408 <br/>
+, curr_dt_nodash_this_year_firstday 20180101
+, curr_dt_nodash_this_year_lastday  20181231 <br/>
+, curr_dt_nodash_next_year_firstday 20190101
+, curr_dt_nodash_next_year_lastday  20181231
+, curr_dt_nodash_next_year_today    20190108 <br/>
+, curr_dt_nodash_next_year_prev_month_today 20181208
+, curr_dt_nodash_next_year_next_month_today 20190208 <br/>
+, curr_dt_nodash_prev_year_firstday 20170101
+, curr_dt_nodash_prev_year_lastday  20171231
+, curr_dt_nodash_prev_year_today    20170108 <br/>
+, curr_dt_nodash_prev_year_prev_month_today 20161208
+, curr_dt_nodash_prev_year_next_month_today 20170208 <br/>
+, curr_mn_nodash_this_month 201801
+, curr_mn_nodash_prev_month 201712
+, curr_mn_nodash_prev_2month    201711 <br/>
+, curr_mn_nodash_prev_3month    201710
+, curr_mn_nodash_prev_6month    201707 <br/>
+, curr_mn_nodash_next_month 201802
+, curr_mn_nodash_next_2month    201803
+, curr_mn_nodash_next_3month    201804
+, curr_mn_nodash_next_6month    201807 <br/>
+, curr_mn_nodash_prev_year_this_month   201701
+, curr_mn_nodash_prev_year_prev_month   201612
+, curr_mn_nodash_prev_year_next_month   201702 <br/>
+, curr_mn_nodash_next_year_this_month   201901
+, curr_mn_nodash_next_year_prev_month   201812
+, curr_mn_nodash_next_year_next_month   201902 <br/>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<div id="main-container" class="container">
+    <h2>日期相关函数</h2>
+    <div class="wy-table-responsive">
+        <table border="1" class="docutils">
+            <colgroup>
+                <col width="20%">
+                <col width="80%">
+            </colgroup>
+            <thead valign="bottom">
+                <tr class="row-odd">
+                <th class="head">日期相关函数</th>
+                <th class="head">说明</th>
+            </tr>
+            </thead>
+            <tbody valign="top">
+                <tr class="row-even">
+                    <td>macros.dateutil.relativedelta.relativedelta</td>
+                    <td>
+                        当月最后1天: {{ (execution_date + macros.dateutil.relativedelta.relativedelta(day=1,months=+1,days=-1)).strftime("%Y-%m-%d") }} <br/>
+                        当月最后1天+TIME: {{ (execution_date + macros.dateutil.relativedelta.relativedelta(day=1,months=+1,days=-1)).strftime("%Y-%m-%d %H:%M:%S") }} <br/>
+                    </td>
+                </tr>
+                <tr class="row-odd">
+                    <td>macros.ds_add</td>
+                    <td>
+                            {{ macros.ds_add('2015-01-06', -5) }}   ---> '2015-01-01
+                    </td>
+                </tr>
+                <tr class="row-even">
+                    <td>macros.ds_format</td>
+                    <td>
+                        {{ macros.ds_format('2015-01-01', '%Y-%m-%d', '%m-%d-%y') }}  ---> 01-01-15                
+                   </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="main-container" class="container">
+    <h2>参数</h2>
+    <div class="wy-table-responsive">
+        <table border="1" class="docutils">
+            <colgroup>
+                <col width="20%">
+                <col width="80%">
+            </colgroup>
+            <thead valign="bottom">
+                <tr class="row-odd">
+                <th class="head">参数</th>
+                <th class="head">说明</th>
+            </tr>
+            </thead>
+            <tbody valign="top">
+                <tr class="row-even">
+                    <td>随机值</td>
+                    <td>
+                        uuid   a4bd6f55-6c84-4109-8036-e24cfa4c6063 <br/>
+                        uuid_nodash 1ec15b06c593415b90ae586f33d3c77d <br/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="main-container" class="container">
+    <h2>Macros</h2>
+    <div class="wy-table-responsive">
+        <table border="1" class="docutils">
+            <colgroup>
+                <col width="20%">
+                <col width="80%">
+            </colgroup>
+            <thead valign="bottom">
+                <tr class="row-odd">
+                <th class="head">Macros</th>
+                <th class="head">说明</th>
+            </tr>
+            </thead>
+            <tbody valign="top">
+                <tr class="row-even">
+                    <td>Macros(python libs)</td>
+                    <td>
+                        macros.datetime --> The standard lib’s datetime.datetime <br/>
+                        macros.timedelta --> The standard lib’s datetime.timedelta <br/>
+                        macros.dateutil --> A reference to the dateutil package <br/>
+                        macros.time --> The standard lib’s time <br/>
+                        macros.uuid --> The standard lib’s uuid <br/>
+                        macros.random --> The standard lib’s random 
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 <div id="main-container" class="container">
